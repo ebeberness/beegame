@@ -10,43 +10,51 @@ function preload() {
 function setup() {
   createCanvas(windowWidth, windowHeight);
   
+   flowers = new Group();
   
-  bee = createSprite(200,200);
-  bee.addImage(beeImg);
-  bee.scale = 0.25;
-  
+   for (let i = 0; i < 10; i++) {
+     f = createSprite(random(width), random(height));
+     f.scale=0.25;
+     f.addImage(flowerImg)
+     //f.onMouseOver=removeAndScore;
+     
+     f.velocity.y = 0.5;
+     flowers.add(f); 
+    
+   } 
 
-  flowers = new Group();
+  bee = createSprite(50, 50);
+  bee.scale = 0.5;
+  bee.addImage(beeImg);
   
-  for (let i = 0; i < 10; i++) {
-    f = createSprite(random(windowWidth), random(windowHeight/2),
-    random(25, 100), random(25, 100));
-    f.addImage(flowerImg);
-    f.scale=0.25;
-    f.velocity.y = 0.5;
-    flowers.add(f);
-    f.onMouseOver=removeAndScore;
-  } 
- 
 }
 
 function draw() {
-background(100, 200, 30);
+ background(100, 200, 30);
 
-  bee.velocity.x = (mouseX-bee.position.x)*0.2;
-  bee.velocity.y = (mouseY-bee.position.y)*0.2;
- 
-  if (score < 10) {
-    text(score, windowWidth/2, windowHeight/2);
-  }
-  else {
-    text("you win!", windowWidth/2, windowHeight/2);
-  } 
+ bee.velocity.x = (mouseX-bee.position.x)*0.2;
+ bee.velocity.y = (mouseY-bee.position.y)*0.2;
 
-  drawSprites();
+bee.collide(flowers, removeAndScore);
+
+drawSprites();
+fill(255);
+noStroke();
+textSize(72);
+textAlign(CENTER, CENTER);
+
+    if (flowers.length > 0) {
+    text(score, width/2, height/2);
+    }
+    else {
+    text("you win!", width/2, height/2);
+    }
 }
 
-function removeAndScore() {
+function removeAndScore(b, flower) {
   score += 1;
-  f.remove();
+  flower.remove();
 }
+
+
+

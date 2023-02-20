@@ -25,6 +25,7 @@
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@web/dev-server": "^0.1.35",
     "rollup": "^2.79.1",
-    "rollup-plugin-copy": "^3.4.0"
+    "rollup-plugin-copy": "^3.4.0",
+    "webextension-polyfill": "^0.10.0"
   }
 }
