@@ -12,42 +12,51 @@ function setup() {
   
    flowers = new Group();
   
-   for (let i = 0; i < 10; i++) {
-     f = createSprite(random(width), random(height));
-     f.scale=0.25;
+   for (let i = 0; i < 20; i++) {
+     f = createSprite(random(width), random(height/2));
      f.addImage(flowerImg)
-     //f.onMouseOver=removeAndScore;
      
      f.velocity.y = 0.5;
      flowers.add(f); 
-    
+     f.scale=0.15;
    } 
 
-  bee = createSprite(50, 50);
-  bee.scale = 0.5;
+  bee = new Sprite();
+  bee.pos={x:50, y:50};
+
   bee.addImage(beeImg);
+  bee.w=5;
+  bee.h=5;
+  bee.scale = 0.15;
+  
   
 }
 
 function draw() {
  background(100, 200, 30);
 
+ drawSprites();
+ 
  bee.velocity.x = (mouseX-bee.position.x)*0.2;
  bee.velocity.y = (mouseY-bee.position.y)*0.2;
 
-bee.collide(flowers, removeAndScore);
+ bee.overlap(flowers, removeAndScore);
 
-drawSprites();
-fill(255);
-noStroke();
-textSize(72);
-textAlign(CENTER, CENTER);
+
+ fill(255);
+ noStroke();
+ textSize(30);
+ textAlign(CENTER, CENTER);
 
     if (flowers.length > 0) {
     text(score, width/2, height/2);
     }
     else {
-    text("you win!", width/2, height/2);
+    text("You collected the pollen from all 20 flowers!", width/2, height/2);
+    }
+
+    if (flowers.position>windowWidth && flowers.position>windowHeight){
+      text("You lose :( You didn't collect the pollen from all of the flowers.")
     }
 }
 
