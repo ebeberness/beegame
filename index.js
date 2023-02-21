@@ -76,7 +76,7 @@ function gameOn(){
 
   if (flowers.length > 0) {
     text("Collect the pollen from all of the flowers", width/2, height/2.3);
-    text(score, width/2, height/2);
+    text(score + "/30", width/2, height/2);
     }
   else {
     background ("yellow");
