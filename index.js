@@ -1,6 +1,8 @@
 let bee;
 let f;
 let score = 0;
+let screen = 0;
+let floor;
 
 function preload() {
   flowerImg = loadImage('/flowergame.png');
@@ -8,18 +10,21 @@ function preload() {
 }
 
 function setup() {
+
   createCanvas(windowWidth, windowHeight);
   
-   flowers = new Group();
-  
-   for (let i = 0; i < 20; i++) {
-     f = createSprite(random(width), random(height/2));
-     f.addImage(flowerImg)
-     
-     f.velocity.y = 0.5;
-     flowers.add(f); 
-     f.scale=0.15;
-   } 
+  fill(100, 200, 30);
+  floor = new Sprite(windowWidth/2, windowHeight+30, windowWidth, 5, "s");
+
+  flowers = new Group();
+
+  for (let i = 0; i < 30; i++) { 
+    f = new Sprite(random(width), random(height/2));
+    f.addImage(flowerImg);
+    flowers.add(f); 
+    f.velocity.y = 1;
+    f.scale=0.15; 
+  }
 
   bee = new Sprite();
   bee.pos={x:50, y:50};
@@ -28,42 +33,75 @@ function setup() {
   bee.w=5;
   bee.h=5;
   bee.scale = 0.15;
-  
-  
+
+ 
+ 
 }
 
 function draw() {
- background(100, 200, 30);
+  if(screen == 0){
+  	gameOn();
+  }else if(screen==1){
+  	endScreen();
+  }	
+}
 
- drawSprites();
- 
- bee.velocity.x = (mouseX-bee.position.x)*0.2;
- bee.velocity.y = (mouseY-bee.position.y)*0.2;
+// function startScreen(){
+//   background(96, 157, 255);
+//   fill(255);
+//   textAlign(CENTER);
+//   text('Use the bee to collect the pollen from all of the flowers. Click to start.', width / 2, height / 2)
+//   reset();
+// }
 
- bee.overlap(flowers, removeAndScore);
+function gameOn(){
 
 
- fill(255);
- noStroke();
- textSize(30);
- textAlign(CENTER, CENTER);
+  background(100, 200, 30);
 
-    if (flowers.length > 0) {
+
+  bee.velocity.x = (mouseX-bee.position.x)*0.2;
+  bee.velocity.y = (mouseY-bee.position.y)*0.2;
+
+  drawSprites();
+  
+  bee.overlap(flowers, removeAndScore);
+
+  flowers.overlap(floor, updateScreen);
+
+  fill(255);
+  noStroke();
+  textSize(30);
+  textAlign(CENTER, CENTER);
+
+  if (flowers.length > 0) {
+    text("Collect the pollen from all of the flowers", width/2, height/2.3);
     text(score, width/2, height/2);
     }
-    else {
-    text("You collected the pollen from all 20 flowers!", width/2, height/2);
-    }
+  else {
+    background ("yellow");
+    fill("black");
+    text("You collected the pollen from all " + score + " flowers! Reload the page to play again", width/2, height/2);
+  }
 
-    if (flowers.position>windowWidth && flowers.position>windowHeight){
-      text("You lose :( You didn't collect the pollen from all of the flowers.")
-    }
-}
+ }
 
 function removeAndScore(b, flower) {
   score += 1;
   flower.remove();
 }
+
+function updateScreen (flower, floor){
+  screen = 1;
+}
+
+function endScreen(){
+  clear();
+  background("blue");
+  text( "You lost, your score was " + score + ". Reload the page to try again", width / 2, height / 2);
+  
+}
+
 
 
 
