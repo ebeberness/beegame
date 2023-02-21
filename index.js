@@ -5,8 +5,8 @@ let screen = 0;
 let floor;
 
 function preload() {
-  flowerImg = loadImage('/images/flowergame.png');
-  beeImg = loadImage('/images/bee.png');
+  flowerImg = loadImage('images/flowergame.png');
+  beeImg = loadImage('images/bee.png');
 }
 
 function setup() {
