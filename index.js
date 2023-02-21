@@ -46,14 +46,6 @@ function draw() {
   }	
 }
 
-// function startScreen(){
-//   background(96, 157, 255);
-//   fill(255);
-//   textAlign(CENTER);
-//   text('Use the bee to collect the pollen from all of the flowers. Click to start.', width / 2, height / 2)
-//   reset();
-// }
-
 function gameOn(){
 
 
